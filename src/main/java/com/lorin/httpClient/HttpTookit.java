@@ -1,4 +1,4 @@
-package httpclient;
+package com.lorin.httpClient;
 
 import java.io.IOException;
 import java.util.HashMap;

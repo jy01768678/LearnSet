@@ -1,4 +1,4 @@
-package httpclient;
+package com.lorin.httpClient;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,10 +12,7 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseInterceptor;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.HttpEntityWrapper;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 

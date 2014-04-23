@@ -1,14 +1,10 @@
-package httpclient;
+package com.lorin.httpClient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 
 
 public class ClientMultiThreadedExecution {

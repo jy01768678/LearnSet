@@ -1,4 +1,4 @@
-package httpclient;
+package com.lorin.httpClient;
 
 import java.io.BufferedReader;
 import java.io.File;
