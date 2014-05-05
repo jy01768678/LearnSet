@@ -31,8 +31,29 @@ public class StringContain {
 	}
 	
 	public static boolean hashCount(String longStr,String shortStr){
-		
-		
+		int hash[] = new int[26];
+		int index = 0;
+		int num= 0;
+		//扫描短字符串
+		for(int i=0;i<shortStr.length();i++){
+			index = shortStr.charAt(i) - 'A';
+			if(hash[index] == 0){
+				hash[index] = 1;
+				num++;
+			}
+		}
+		//扫描长字符串
+		for(int j=0;j<longStr.length();j++){
+			index = longStr.charAt(j) - 'A';
+			if(hash[index] == 1){
+				hash[index] = 0;
+				num -- ;
+				if(num == 0){
+					break;
+				}
+			}
+		}
+		if(num == 0)return true;
 		return false;
 	}
 	
