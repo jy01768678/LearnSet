@@ -23,7 +23,7 @@
 		  <version>4.4</version>
 		  <scope>test</scope>
 		</dependency>
-        <!-- Spring依赖包
+        <!-- Spring依赖包-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -79,6 +79,8 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.spring.version}</version>
 		</dependency>
+		
+		<!--
 		<dependency>
 	      <groupId>org.apache.httpcomponents</groupId>
 	      <artifactId>httpcore</artifactId>
