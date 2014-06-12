@@ -1,9 +1,59 @@
 package com.lorin.algorithm.art;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Find2Num {
+	
+	/**
+	 * 最大乘积连续子串
+	 * @param data
+	 * @return
+	 */
+	public static int[] maxLargeSubMultiStr(int[] data){
+		
+		return null;
+	}
+	
+	/**
+	 * 不改变正负数之间相对顺序重新排列数组.时间O(N)，空间O(1)
+	 * @param data
+	 * @return
+	 */
+	public static int[] mergeSort(int[] data){
+		
+		int startIndex = 0;
+		int endIndex = 0;
+		int temp = 0;
+		boolean exchange = false;
+		for(int i=data.length-1;i>=0;i--){
+			if(data[i] < 0 && endIndex == 0){
+				endIndex=i;
+			}
+			if(endIndex != 0 && data[i]>0){
+				startIndex = i;
+				exchange = true;
+			}
+			if(exchange && (endIndex - startIndex == 1)){
+				temp = data[endIndex];
+				data[endIndex] = data[startIndex];
+				data[startIndex] = temp;
+				endIndex = startIndex;
+				startIndex = 0;
+				exchange = false;
+			}else if(exchange && (endIndex - startIndex > 1)){
+				temp = data[startIndex];
+				for(int j=startIndex;j<=endIndex;j++){
+					data[j] = data[j+1];
+				}
+				data[endIndex] = temp;
+				endIndex = endIndex-1;
+				startIndex = 0;
+				exchange = false;
+			}
+		}
+		
+		return data;
+	}
 	
 	/**
 	 * 寻找水王
@@ -101,7 +151,13 @@ public class Find2Num {
 	public static void main(String[] args) {
 		int n = 30;
 		int m = 15;
-		List<Integer> result = new ArrayList<Integer>();
-		findFactor(n, m, 1,result);
+//		List<Integer> result = new ArrayList<Integer>();
+//		findFactor(n, m, 1,result);
+		int[] data = new int[]{1, 7, -5, 9, -12, 15 };
+//		int[] data = new int[]{1, 7, -5, -6, 9, -12, 15,-16};
+		int[] result = mergeSort(data);
+		for(int i=0;i<result.length;i++){
+			System.out.print(result[i] + "\t");
+		}
 	}
 }
