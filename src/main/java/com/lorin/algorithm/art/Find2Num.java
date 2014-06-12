@@ -9,9 +9,17 @@ public class Find2Num {
 	 * @param data
 	 * @return
 	 */
-	public static int[] maxLargeSubMultiStr(int[] data){
-		
-		return null;
+	public static double[] maxLargeSubMultiStr(double[] data){
+		double[] maxC = new double[data.length];
+		double[] minC = new double[data.length];
+		double maxValue = maxC[0] = minC[0] = data[0];
+		for(int i=1;i<data.length;i++){
+			maxC[i] = Math.max(Math.max(data[i], maxC[i-1]*data[i]), maxC[i]*data[i]);
+			minC[i] = Math.min(Math.min(data[i], minC[i-1]*data[i]), minC[i]*data[i]);
+			maxValue = Math.max(maxValue, maxC[i]);
+		}
+		System.out.println("最大乘积为："+maxValue);
+		return maxC;
 	}
 	
 	/**
@@ -153,9 +161,11 @@ public class Find2Num {
 		int m = 15;
 //		List<Integer> result = new ArrayList<Integer>();
 //		findFactor(n, m, 1,result);
-		int[] data = new int[]{1, 7, -5, 9, -12, 15 };
+//		int[] data = new int[]{1, 7, -5, 9, -12, 15 };
 //		int[] data = new int[]{1, 7, -5, -6, 9, -12, 15,-16};
-		int[] result = mergeSort(data);
+//		int[] result = mergeSort(data);
+		double[] data = new double[]{ -2.5,4,0,3,0.5,8,-1};
+		double[] result = maxLargeSubMultiStr(data);
 		for(int i=0;i<result.length;i++){
 			System.out.print(result[i] + "\t");
 		}
