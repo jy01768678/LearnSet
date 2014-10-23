@@ -4,6 +4,11 @@ import java.util.List;
 
 public class Find2Num {
 	
+	public static int[] hollandFlag(int[] data){
+		
+		return null;
+	}
+	
 	/**
 	 * 最大乘积连续子串
 	 * @param data
