@@ -288,7 +288,7 @@ public class DateUtils {
 //		System.out.println(geTimestamp10Long(beginTime));//
 		System.out.println("当前时间没有减去8："+getNowTimestamp10LongNoSub8());
 		//2013-11-11 16:43:51 
-		System.out.println("没有+8:"+dateChnFormat(1428373489, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1429126259, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有+8:"+dateChnFormat(1421288607, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有-8:"+GMTSFormatToCT(1381001805, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("ddd:"+getCurrDateStart(new Date()) / 1000);
