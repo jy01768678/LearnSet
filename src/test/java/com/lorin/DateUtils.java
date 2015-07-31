@@ -233,7 +233,12 @@ public class DateUtils {
 	        return newDay;
 		}
 	 public static int getNowTimestamp10Int(){
-			return (int) (System.currentTimeMillis() / 1000 - 28800);
+			long curTime = System.currentTimeMillis();
+			Calendar cal = Calendar.getInstance();
+	        cal.setTimeInMillis(curTime);
+	        cal.add(Calendar.HOUR, -8);
+			String str = String.valueOf(cal.getTime().getTime()).substring(0, 10);
+			return new Integer(0).parseInt(str);
 		}
 	 public static long getDayBeginTime(int count) {
 			Calendar calendar = GregorianCalendar.getInstance();
@@ -288,13 +293,14 @@ public class DateUtils {
 //		System.out.println(geTimestamp10Long(beginTime));//
 		System.out.println("当前时间没有减去8："+getNowTimestamp10LongNoSub8());
 		//2013-11-11 16:43:51 
-		System.out.println("没有+8:"+dateChnFormat(1429126259, "yyyy-MM-dd HH:mm:ss"));
-		System.out.println("没有+8:"+dateChnFormat(1421288607, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1435718986, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1434470400, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有-8:"+GMTSFormatToCT(1381001805, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("-8 int:"+getNowTimestamp10Int());
 		System.out.println("ddd:"+getCurrDateStart(new Date()) / 1000);
 		System.out.println(formatDate(0) + "\t" + formatDate(1388289755));
 		System.out.println("当天开始结束时间："+getDayBeginTime()+"\t"+getDayEndTime());
-		System.out.println(dateStringFormatNoSub8("2014-08-05 14:00:00"));
+		System.out.println(dateStringFormatNoSub8("2014-01-01 00:00:00")+"--");
 		//1413415931--1366940967
 		System.out.println(getDayBeginTime(0)+"---"+getDayEndTime(1));
 		System.out.println(getFormatTimeFormat("2014-08-05 14:00:00", "yyyy-MM-dd HH:mm:ss", "MM-dd HH:mm:ss"));

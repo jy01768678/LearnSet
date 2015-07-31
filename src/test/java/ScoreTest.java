@@ -22,7 +22,7 @@ public class ScoreTest {
 	//select * from wowouserext03.`jeehe_user_score_detail22` a WHERE a.`user_id`=100000598 ORDER BY a.`time` DESC
 	//online -1987310 自动测试账户107549618
 	public static void main(String[] args) {
-		int userId = 42048719;
+		int userId = 44526201;
 		System.out.println("分库："+(userId % 4 +1)+ "\t分表：" + (userId %(32 * 4) / 4 + 1));
 	}
 }

@@ -240,6 +240,11 @@
 			<artifactId>hadoop-core</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+		<dependency>
+	    <groupId>com.appadhoc</groupId>
+	      <artifactId>adhoc-java</artifactId>
+	      <version>0.0.1</version>
+	    </dependency>
   </dependencies>
   <build>
   <plugins>
