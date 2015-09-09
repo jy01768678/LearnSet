@@ -23,10 +23,10 @@ public class decodeTest {
 			//5179cce9044a7be1 -- 502266
 			//8304906a3d973b9af42664ba748dd429
 			//69a415532b6cbe6c -- 607335
-			System.out.println(des.encrypt(""+0) + " -- " +des.encrypt("55tuansmskeyDetail20150410"));
+			System.out.println(des.encrypt(""+0) + " -- " +des.encrypt("55tuansmsKeyZML"));
 			System.out.println(des.encrypt("199169594958") + " -- " +des.encrypt("875869"));
 			System.out.println(des.decrypt("")+"\t");
-			System.out.println(des.decrypt("e0b8e5edb62eb832b10a36e3851711a0")+"\t");
+			System.out.println(des.decrypt("f0d81812b0ba44d88e3576e7b99d7229")+"\t");
 			System.out.println(des.decrypt("037e9abcb3eb81c1")+"\t");
 			System.out.println(new JeeheDES().decrypt(""));
 			String title = "八分田咖啡&#8226;精致果木牛扒";

@@ -17,11 +17,32 @@
   </properties>
 
   <dependencies>
+  		 <dependency>
+			<groupId>json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+				<groupId>net.sf.morph</groupId>
+				<artifactId>morph</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+		   <dependency>
+			  <groupId>net.sf.ezmorph</groupId>
+			  <artifactId>ezmorph</artifactId>
+			  <version>1.0.6</version>
+			</dependency>
+			
 	    <dependency>
 		  <groupId>junit</groupId>
 		  <artifactId>junit</artifactId>
 		  <version>4.4</version>
 		  <scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.8</version>
 		</dependency>
         <!-- Spring依赖包-->
 		<dependency>
@@ -245,6 +266,11 @@
 	      <artifactId>adhoc-java</artifactId>
 	      <version>0.0.1</version>
 	    </dependency>
+	    <dependency>
+		    <groupId>com.suse.saltstack</groupId>
+		    <artifactId>saltstack-netapi-client</artifactId>
+		    <version>0.4.1</version>
+		</dependency>
   </dependencies>
   <build>
   <plugins>

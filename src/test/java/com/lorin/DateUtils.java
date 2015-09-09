@@ -276,6 +276,16 @@ public class DateUtils {
 			return "";
 		}
 		
+		public static String subDayFromCurrDate(int subDay){
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date d = new Date();
+			long curTime = d.getTime();
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(curTime);
+			cal.add(Calendar.DAY_OF_MONTH, -subDay);
+			return sf.format(cal.getTime());
+		}
+		
 	public static void main(String[] args) throws ParseException {
 		Date now = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -314,8 +324,8 @@ public class DateUtils {
 //		System.out.println(getTimeWithDay(30));
 //		System.out.println(1342943940 / (24 * 3600 * 365));
 		System.out.println("-------------------------");
-		System.out.println(getNowTimestamp10Long()-3600);
-		System.out.println((getCurrDateStartLottery(new Date())+86400));
+		System.out.println(subDayFromCurrDate(7) + "-" + subDayFromCurrDate(15));
+		System.out.println(subDayFromCurrDate(30) + "-" + subDayFromCurrDate(90));
 //		moneySaveTime();
 	}
 }

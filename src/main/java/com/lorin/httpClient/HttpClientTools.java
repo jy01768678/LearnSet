@@ -1,6 +1,10 @@
 package com.lorin.httpClient;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -68,6 +72,46 @@ public class HttpClientTools {
 		try {
 			iGetResultCode = httpclient.executeMethod(httpget);
 			strGetResponseBody = httpget.getResponseBodyAsString();
+			if (iGetResultCode >= 200 && iGetResultCode < 303) {
+				return true;
+			} else if (iGetResultCode >= 400 && iGetResultCode < 500) {
+				errorInfo = "请求资源不存在或内部错误" + iGetResultCode;
+			} else {
+				errorInfo = "服务器出错" + iGetResultCode;
+			}
+		} catch (Exception ex) {
+			errorInfo = ex.getMessage();
+		} finally {
+			httpget.releaseConnection();
+		}
+		return false;
+	}
+	
+	public boolean executeGetMethodReStream(String url, String param, Map<String, String> headers) {
+		if (url == null || url.length() <= 0) {
+			errorInfo = "url为空值";
+			return false;
+		}
+		StringBuffer serverURL = new StringBuffer(url);
+		if (param != null && param.length() > 0) {
+			serverURL.append("?");
+			serverURL.append(param);
+		}
+		// System.out.println("serverURL=" + serverURL);
+		GetMethod httpget = new GetMethod(serverURL.toString());
+		httpget.setFollowRedirects(true);
+		//设置请求头
+		if(null != headers && !headers.isEmpty()){
+			Iterator<String> it = headers.keySet().iterator();
+			while(it.hasNext()){
+				String key = it.next();
+				String value = headers.get(key);
+				httpget.setRequestHeader(key, value);
+			}
+		}
+		try {
+			iGetResultCode = httpclient.executeMethod(httpget);
+			 httpget.getResponseBodyAsStream();
 			if (iGetResultCode >= 200 && iGetResultCode < 303) {
 				return true;
 			} else if (iGetResultCode >= 400 && iGetResultCode < 500) {
@@ -356,11 +400,57 @@ public class HttpClientTools {
 		return false;
 	}
 	
+	public boolean executePostMethodStream(String strURL, String postBody,String contentCharSet,
+			String contentType) {
+		if (strURL == null || strURL.length() <= 0) {
+			return false;
+		}
+
+		PostMethod post = new PostMethod(strURL);
+		try {
+			contentCharSet = contentCharSet==null?HTTP_CONTENT_DEFAULT_CHARSET:contentCharSet;
+			post.getParams().setParameter(
+					HttpMethodParams.HTTP_CONTENT_CHARSET, contentCharSet);
+			post.setRequestHeader("Content-type", contentType);
+			post.setRequestEntity(new StringRequestEntity(postBody,
+					contentType, null));
+
+			iGetResultCode = httpclient.executeMethod(post);
+			InputStream is = post.getResponseBodyAsStream();
+			 BufferedReader br = new BufferedReader(new InputStreamReader(is));   
+		        StringBuffer stringBuffer = new StringBuffer();   
+		        String str= "";   
+		        while((str = br.readLine()) != null){   
+		            stringBuffer .append(str );   
+		        }   
+		   System.out.println("ResponseBody:\n" + stringBuffer.toString());
+			//logger.info(new String(strGetResponseBody));
+			if (iGetResultCode >= 200 && iGetResultCode < 303) {
+				return true;
+			} else if (iGetResultCode >= 400 && iGetResultCode < 500) {
+				errorInfo = strURL + "请求资源不存在或内部错误" + iGetResultCode;
+			} else {
+				errorInfo = strURL + "服务器出错" + iGetResultCode;
+			}
+		} catch (Exception ex) {
+			errorInfo = ex.getMessage();
+		} finally {
+			post.releaseConnection();
+		}
+		return false;
+	}
+	
 
 	
 	public boolean executePostMethod(String strURL, String postBody,
 			String contentType) {
 		return  executePostMethod( strURL,  postBody, HTTP_CONTENT_DEFAULT_CHARSET,
+				 contentType);
+	}
+	
+	public boolean executePostMethodStream(String strURL, String postBody,
+			String contentType) {
+		return  executePostMethodStream( strURL,  postBody, HTTP_CONTENT_DEFAULT_CHARSET,
 				 contentType);
 	}
 	

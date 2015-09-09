@@ -10,11 +10,24 @@ import com.lorin.httpClient.HttpClientTools;
 
 public class MarathonTest {
 
+	public static String maraUrl = "http://10.9.120.21:8080";
+	public static String maraApi = "/v2/apps/";
+	public static  String appId = "aether-spe";
+	
 	public static void main(String[] args) {
-		String maraUrl = "http://10.9.120.21:8080";
-		String maraApi = "/v2/apps/";
-		String appId = "aether002";
+//		getAppJson();
+		deleteTasks();
+	}
+	
+	public static void deleteTasks(){
+		String realUrl = maraUrl+maraApi+"actcenter-nor"+"/tasks"; 
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
 		
+		boolean rs = tools.executeDeleteMethod(realUrl, "scale=true");
+		System.out.println(tools.getStrGetResponseBody());
+	}
+	
+	public static void putAppJson(){
 		String realUrl = maraUrl+maraApi+appId;
 		
 		HttpClientTools tools = HttpClientManager.getHttpClientTools();
@@ -26,6 +39,17 @@ public class MarathonTest {
 			System.out.println("应用发布失败。" + tools.getErrorInfo());
 		}
 		System.out.println("发布结果:" + tools.getStrGetResponseBody());
+	}
+	
+	
+	public static void getAppJson(){
+		String realUrl = maraUrl+maraApi+appId;
+		
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		boolean rs = tools.executeGetMethod(realUrl, null, null);
+		if(rs){
+			System.out.println("结果:" + tools.getStrGetResponseBody());
+		}
 	}
 	
 	public static String getDockerJson(){
