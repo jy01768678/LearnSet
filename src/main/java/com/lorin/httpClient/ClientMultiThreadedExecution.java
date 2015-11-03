@@ -2,6 +2,9 @@ package com.lorin.httpClient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
@@ -16,7 +19,7 @@ public class ClientMultiThreadedExecution {
         ThreadSafeClientConnManager tscc = new ThreadSafeClientConnManager();
         tscc.setMaxTotal(100);
         
-        HttpClient httpClient = new DefaultHttpClient(tscc);
+        HttpClient httpClient = null;//new DefaultHttpClient(tscc);
         try {  
             // create an array of URIs to perform GETs on  
             String[] urisToGet = {  
@@ -48,7 +51,7 @@ public class ClientMultiThreadedExecution {
             // When HttpClient instance is no longer needed,  
             // shut down the connection manager to ensure  
             // immediate deallocation of all system resources  
-            httpClient.getConnectionManager().shutdown();  
+//            httpClient.getConnectionManager().shutdown();  
         }
     }
     
@@ -80,7 +83,7 @@ public class ClientMultiThreadedExecution {
             try {  
   
                 // execute the method  
-                HttpResponse response = httpClient.execute(httpget, context);  
+                HttpResponse response = null;//httpClient.execute(httpget, context);  
   
                 System.out.println(id + " - get executed");  
                 // get the response body as an array of bytes  

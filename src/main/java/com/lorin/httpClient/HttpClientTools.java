@@ -1,7 +1,6 @@
 package com.lorin.httpClient;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.NameValuePair;
@@ -19,7 +19,6 @@ import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +32,7 @@ public class HttpClientTools {
 	private static Logger logger = LoggerFactory.getLogger(HttpClientTools.class);
 	private int iGetResultCode;
 	private String strGetResponseBody;
+	private Header rheaders[];
 	private String errorInfo;
 	/** HttpClient */
 	private HttpClient httpclient;
@@ -161,6 +161,7 @@ public class HttpClientTools {
 		try {
 			iGetResultCode = httpclient.executeMethod(httpget);
 			strGetResponseBody = httpget.getResponseBodyAsString();
+			rheaders= httpget.getResponseHeaders();
 			if (iGetResultCode >= 200 && iGetResultCode < 303) {
 				return true;
 			} else if (iGetResultCode >= 400 && iGetResultCode < 500) {
@@ -400,6 +401,83 @@ public class HttpClientTools {
 		return false;
 	}
 	
+	public boolean executePostMethodForSalt(String strURL, String postBody,String contentCharSet,
+			String contentType) {
+		if (strURL == null || strURL.length() <= 0) {
+			return false;
+		}
+
+		PostMethod post = new PostMethod(strURL);
+		try {
+			contentCharSet = contentCharSet==null?HTTP_CONTENT_DEFAULT_CHARSET:contentCharSet;
+			post.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, contentCharSet);
+			post.setRequestHeader("Content-type", contentType);
+			post.setRequestHeader("ACCEPT", "application/json");
+			post.setRequestEntity(new StringRequestEntity(postBody,contentType, null));
+			
+			Protocol myhttps = new Protocol("https", new SimpleSSLProtocolSocketFactory(), 443); 
+			Protocol.registerProtocol("https", myhttps); 
+
+			iGetResultCode = httpclient.executeMethod(post);
+			strGetResponseBody = post.getResponseBodyAsString();
+			//logger.info(new String(strGetResponseBody));
+			if (iGetResultCode >= 200 && iGetResultCode < 303) {
+				return true;
+			} else if (iGetResultCode >= 400 && iGetResultCode < 500) {
+				errorInfo = strURL + "请求资源不存在或内部错误" + iGetResultCode;
+			} else {
+				errorInfo = strURL + "服务器出错" + iGetResultCode;
+			}
+		} catch (Exception ex) {
+			errorInfo = ex.getMessage();
+		} finally {
+			post.releaseConnection();
+		}
+		return false;
+	}
+	
+	/** 
+	* @Description:  忽略证书的http post 请求
+	* @param strURL
+	* @param postBody
+	* @param contentCharSet
+	* @param contentType
+	* @return boolean
+	* @Date 2015年8月5日 下午3:40:05
+	* @auther zhangyi 
+	*/
+	public boolean executePostMethodIngoreCert(String strURL, String postBody,String contentCharSet,String contentType) {
+		if (strURL == null || strURL.length() <= 0) {
+			return false;
+		}
+
+		PostMethod post = new PostMethod(strURL);
+		try {
+			contentCharSet = contentCharSet==null?HTTP_CONTENT_DEFAULT_CHARSET:contentCharSet;
+			post.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, contentCharSet);
+			post.setRequestHeader("Content-type", contentType);
+			post.setRequestEntity(new StringRequestEntity(postBody,contentType, null));
+			
+			Protocol myhttps = new Protocol("https", new SimpleSSLProtocolSocketFactory(), 443); 
+			Protocol.registerProtocol("https", myhttps); 
+			
+			iGetResultCode = httpclient.executeMethod(post);
+			strGetResponseBody = post.getResponseBodyAsString();
+			if (iGetResultCode >= 200 && iGetResultCode < 303) {
+				return true;
+			} else if (iGetResultCode >= 400 && iGetResultCode < 500) {
+				errorInfo = strURL + "请求资源不存在或内部错误" + iGetResultCode;
+			} else {
+				errorInfo = strURL + "服务器出错" + iGetResultCode;
+			}
+		} catch (Exception ex) {
+			errorInfo = ex.getMessage();
+		} finally {
+			post.releaseConnection();
+		}
+		return false;
+	}
+	
 	public boolean executePostMethodStream(String strURL, String postBody,String contentCharSet,
 			String contentType) {
 		if (strURL == null || strURL.length() <= 0) {
@@ -448,6 +526,12 @@ public class HttpClientTools {
 				 contentType);
 	}
 	
+	public boolean executePostMethodForSalt(String strURL, String postBody,
+			String contentType) {
+		return  executePostMethodForSalt( strURL,  postBody, HTTP_CONTENT_DEFAULT_CHARSET,
+				 contentType);
+	}
+	
 	public boolean executePostMethodStream(String strURL, String postBody,
 			String contentType) {
 		return  executePostMethodStream( strURL,  postBody, HTTP_CONTENT_DEFAULT_CHARSET,
@@ -467,9 +551,12 @@ public class HttpClientTools {
 		return errorInfo;
 	}
 	
+	public Header[] getRheaders() {
+		return rheaders;
+	}
+
 	public boolean executePutMethod(String strURL, String postBody,String contentType) {
 		return  executePutMethod( strURL,  postBody, HTTP_CONTENT_DEFAULT_CHARSET,contentType);
 	}
-
 
 }

@@ -30,7 +30,7 @@ public class NotifyShardedJedisPool extends Pool<NotifyShardedJedis> {
 
 	public NotifyShardedJedisPool(final GenericObjectPool.Config poolConfig,
 			List<JedisShardInfo> shards, Hashing algo, Pattern keyTagPattern) {
-		super(poolConfig, new ShardedJedisFactory(shards, algo, keyTagPattern));
+//		super(poolConfig, new ShardedJedisFactory(shards, algo, keyTagPattern));
 	}
 
 	/**

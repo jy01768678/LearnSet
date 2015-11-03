@@ -10,6 +10,7 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.lang.StringUtils;
 
 import com.lorin.httpClient.HttpClientManager;
@@ -21,18 +22,114 @@ public class RegistryTest {
 
 	public static String url = "https://10.9.120.21/v1/search";
 	
-	public static String url_V2 = "https://10.9.120.24/v2/_catalog";
+	public static String url_V2_search = "https://10.9.120.24/v2/_catalog";
+	
+	public static String url2 = url_V2_search;
 	
 	public static String url_V2_metis = "https://10.9.120.24/v2/aether/spe/manifests/60";
 	
 	private static String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 	
 	public static void main(String[] args) {
-//		TestRegistryV2();
+//		TestRegistryV2_delBlob();
+//		TestRegistryV2_getBlob();
+//		TestRegistryV2_delManifest();
+//		TestRegistryV2_getManifest();
+//		TestRegistryV2_getTag();
+		TestRegistryV2();
 //		TestRegistryV2_Del();
-		TestRegistryV1();
+//		TestRegistryV1();
 	}
 	
+	public static void TestRegistryV2_delBlob(){
+		String username = "wowotuanops";
+		String password = "registrywowotuan";
+		String url = "https://10.9.120.24/v2/officalcentos/blobs/sha256:296d74605c033deed84fefbe2c259f7bafbb906cc2d021c096727edcc9328920";
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		boolean rs = false;
+		Map<String, String> headers = new HashMap<String, String>();
+		if(!StringUtils.isEmpty(username)){
+			headers.put("Authorization", "Basic " + new Base64Encoder().encode((username + ":" + password).getBytes()));
+		}
+		rs = tools.executeDeleteMethodHttps(url, null, headers);
+		System.out.println(tools.getStrGetResponseBody());
+	}
+	
+	public static void TestRegistryV2_getBlob(){
+		String username = "wowotuanops";
+		String password = "registrywowotuan";
+		String url = "https://10.9.120.24/v2/centos/blobs/sha256:24d999e10f79d74454476081f4812971ad03a49db8b209a40ba8ef288c1ab583";
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		boolean rs = false;
+		Map<String, String> headers = new HashMap<String, String>();
+		if(!StringUtils.isEmpty(username)){
+			headers.put("Authorization", "Basic " + new Base64Encoder().encode((username + ":" + password).getBytes()));
+		}
+		rs = tools.executeGetMethodHttps(url, null, headers);
+		System.out.println(tools.getStrGetResponseBody()+"\n"+ "--code="+tools.getiGetResultCode());
+		Header[] rheaders = tools.getRheaders();
+		for(Header rh : rheaders){
+			System.out.println(rh.getName()+"--"+rh.getValue());
+		}
+	}
+	
+	public static void TestRegistryV2_delManifest(){
+		String username = "wowotuanops";
+		String password = "registrywowotuan";
+		String url = "https://10.9.120.24/v2/centos/manifests/sha256:24d999e10f79d74454476081f4812971ad03a49db8b209a40ba8ef288c1ab583";
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		boolean rs = false;
+		Map<String, String> headers = new HashMap<String, String>();
+		if(!StringUtils.isEmpty(username)){
+			headers.put("Authorization", "Basic " + new Base64Encoder().encode((username + ":" + password).getBytes()));
+		}
+		rs = tools.executeDeleteMethodHttps(url, null, headers);
+		System.out.println(tools.getStrGetResponseBody() + "--code="+tools.getiGetResultCode());
+	}
+	
+	//7f295489e9630370ff4b0d92930f7411417d82ef80059f7db7bd6247d1c01eee
+	public static void TestRegistryV2_getManifest(){
+		String username = "wowotuanops";
+		String password = "registrywowotuan";
+		String url = "https://10.9.120.24/v2/centos/manifests/base";
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		boolean rs = false;
+		Map<String, String> headers = new HashMap<String, String>();
+		if(!StringUtils.isEmpty(username)){
+			headers.put("Authorization", "Basic " + new Base64Encoder().encode((username + ":" + password).getBytes()));
+		}
+		rs = tools.executeGetMethodHttps(url, null, headers);
+		System.out.println(tools.getStrGetResponseBody());
+		Header[] rheaders = tools.getRheaders();
+		for(Header rh : rheaders){
+			System.out.println(rh.getName()+"--"+rh.getValue());
+		}
+	}
+	
+	/**
+	 * {"name":"centos","tags":["base","test"]}
+	 * 
+	 */
+	public static void TestRegistryV2_getTag(){
+		String username = "wowotuanops";
+		String password = "registrywowotuan";
+		String url = "https://10.9.120.24/v2/centos/tags/list";
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		boolean rs = false;
+		Map<String, String> headers = new HashMap<String, String>();
+		if(!StringUtils.isEmpty(username)){
+			headers.put("Authorization", "Basic " + new Base64Encoder().encode((username + ":" + password).getBytes()));
+		}
+		rs = tools.executeGetMethodHttps(url, null, headers);
+		System.out.println(tools.getStrGetResponseBody());
+		//{"name":"phpnginx","tags":["test"]}
+		Header[] rheaders = tools.getRheaders();
+		for(Header rh : rheaders){
+			System.out.println(rh.getName()+"--"+rh.getValue());
+		}
+	}
+	
+	//["centos","centos2","centostest","officalcentos","phpnginx","registry"]
 	public static void TestRegistryV2(){
 		String username = "wowotuanops";
 		String password = "registrywowotuan";
@@ -43,31 +140,31 @@ public class RegistryTest {
 			if(!StringUtils.isEmpty(username)){
 				headers.put("Authorization", "Basic " + new Base64Encoder().encode((username + ":" + password).getBytes()));
 			}
-			rs = tools.executeGetMethodHttps(url_V2_metis, null, headers);
+			rs = tools.executeGetMethodHttps(url2, null, headers);
 		}else{
-			rs = tools.executeGetMethod(url_V2_metis, null);
+			rs = tools.executeGetMethod(url2, null);
 		}
+		System.out.println(tools.getStrGetResponseBody());
+//		if(rs){
+//			String message = tools.getStrGetResponseBody();
+//			JSONObject json = JSONObject.fromObject(message);
+//			JSONArray array = JSONArray.fromObject(json.getString("history")) ;
+//			JSONObject v1CObj =JSONObject.fromObject(JSONObject.fromObject(array.get(0)).getString("v1Compatibility"));
+//			System.out.println(v1CObj.getString("id") + "" +v1CObj.getString("created"));
+//			try {
+//				Date date = new SimpleDateFormat(DATE_PATTERN).parse(v1CObj.getString("created"));
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 		
 		if(rs){
 			String message = tools.getStrGetResponseBody();
-			JSONObject json = JSONObject.fromObject(message);
-			JSONArray array = JSONArray.fromObject(json.getString("history")) ;
-			JSONObject v1CObj =JSONObject.fromObject(JSONObject.fromObject(array.get(0)).getString("v1Compatibility"));
-			System.out.println(v1CObj.getString("id") + "" +v1CObj.getString("created"));
-			try {
-				Date date = new SimpleDateFormat(DATE_PATTERN).parse(v1CObj.getString("created"));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-//		if(rs){
-//			String message = tools.getStrGetResponseBody();
-//			System.out.println(message + "\n\r"+tools.getiGetResultCode());
-//			RegistrySearchRepoData rsrd = JSONUtil.jsonToBean(message, RegistrySearchRepoData.class);
-//			System.out.println(rsrd.getRepositories().size());
-//		}	
+			System.out.println(message + "\n\r"+tools.getiGetResultCode());
+			RegistrySearchRepoData rsrd = JSONUtil.jsonToBean(message, RegistrySearchRepoData.class);
+			System.out.println(rsrd.getRepositories().size());
+		}	
 	}
 	
    public static void TestRegistryV2_Del(){

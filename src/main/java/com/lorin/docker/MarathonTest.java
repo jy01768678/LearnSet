@@ -4,19 +4,38 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.lorin.httpClient.HttpClientManager;
 import com.lorin.httpClient.HttpClientTools;
+import com.thoughtworks.xstream.core.util.Base64Encoder;
 
 public class MarathonTest {
 
 	public static String maraUrl = "http://10.9.120.21:8080";
+	public static String maraHttps = "https://10.9.120.21:8443";
 	public static String maraApi = "/v2/apps/";
 	public static  String appId = "aether-spe";
 	
 	public static void main(String[] args) {
 //		getAppJson();
-		deleteTasks();
+//		deleteTasks();
+		getTaskHttps();
+	}
+	
+	
+	public static void getTaskHttps(){
+		String realUrl = maraHttps+maraApi+"mars-cg";
+		HttpClientTools tools = HttpClientManager.getHttpClientTools();
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Authorization", "Basic " + new Base64Encoder().encode(("wowotuan" + ":" + "wowotuan").getBytes()));
+		boolean rs = tools.executeGetMethodHttps(realUrl, null, headers);
+		if(rs){
+			System.out.println("结果:" + tools.getStrGetResponseBody());
+		}
 	}
 	
 	public static void deleteTasks(){
