@@ -4,9 +4,7 @@ package com.lorin.design.template;
 import com.lorin.httpClient.HttpClientManager;
 import com.lorin.httpClient.HttpClientTools;
 
-/**
- * Created by taodong on 15/11/24.
- */
+
 public class SkylarkRouterTemplate implements PhpRouterOperations{
 
     public static String PHP_ROUTER_ADDRESS;

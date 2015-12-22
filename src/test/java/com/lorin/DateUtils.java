@@ -1,6 +1,8 @@
 package com.lorin;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -9,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.mysql.jdbc.TimeUtil;
 import org.apache.commons.lang.StringUtils;
 
 public class DateUtils {
@@ -155,18 +158,37 @@ public class DateUtils {
 	     */
 	     public static long getDayEndTime() {
 	        Calendar calendar = GregorianCalendar.getInstance();
-//	        calendar.add(Calendar.DAY_OF_MONTH, 1);
+	        calendar.add(Calendar.DAY_OF_MONTH, 1);
 	        long curTime = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).getTimeInMillis();
 	        String str = String.valueOf(curTime).substring(0, 10);
 	        return Long.parseLong(str);
 	    }
+	public static long getDayEndTime(long time) {
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTimeInMillis(time);
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+		long curTime = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).getTimeInMillis();
+		String str = String.valueOf(curTime).substring(0, 10);
+		return Long.parseLong(str);
+	}
 	 
 	 public static String formatDate(int time) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
 			cal.setTimeInMillis(time * 1000L);
 			return dateFormat.format((new Date(cal.getTimeInMillis())));
-		}
+	 }
+
+	 public static long getParamDayEndTime(int time){
+		 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		 Calendar calendar = Calendar.getInstance();
+		 calendar.setTimeInMillis(time * 1000L);
+		 calendar.add(Calendar.DAY_OF_MONTH, 1);
+		 long curTime = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).getTimeInMillis();
+		 String str = String.valueOf(curTime).substring(0, 10);
+		 return Long.parseLong(str);
+	 }
+
 	 
 	 public static void moneySaveTime(){
 		 long time = System.currentTimeMillis();
@@ -183,7 +205,7 @@ public class DateUtils {
 				
 			}
 			long endTime = l+60000;
-			System.out.println("moneySave2:"+dateChnFormatNo1000(endTime, "yyyy-MM-dd HH:mm:ss.SSS"));
+			System.out.println("moneySave2:" + dateChnFormatNo1000(endTime, "yyyy-MM-dd HH:mm:ss.SSS"));
 			
 	 }
 	 
@@ -285,7 +307,21 @@ public class DateUtils {
 			cal.add(Calendar.DAY_OF_MONTH, -subDay);
 			return sf.format(cal.getTime());
 		}
-		
+
+	public static int getNowTimestampSecond(){
+		long curTime = System.currentTimeMillis()/1000;
+		return (int)curTime;
+	}
+
+	public static long getRealOutTime(int claimTime){
+		long a = ( getParamDayEndTime(claimTime) + 13 * 24 * 3600 );
+		int b = 1449075600;//getNowTimestampSecond();
+		long c = a - b;
+		long d = c / (24*3600);
+		return  d;
+	}
+
+
 	public static void main(String[] args) throws ParseException {
 		Date now = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -303,29 +339,24 @@ public class DateUtils {
 //		System.out.println(geTimestamp10Long(beginTime));//
 		System.out.println("当前时间没有减去8："+getNowTimestamp10LongNoSub8());
 		//2013-11-11 16:43:51 
-		System.out.println("没有+8:"+dateChnFormat(1435718986, "yyyy-MM-dd HH:mm:ss"));
-		System.out.println("没有+8:"+dateChnFormat(1434470400, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1449656578, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1449072000, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有-8:"+GMTSFormatToCT(1381001805, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("-8 int:"+getNowTimestamp10Int());
 		System.out.println("ddd:"+getCurrDateStart(new Date()) / 1000);
 		System.out.println(formatDate(0) + "\t" + formatDate(1388289755));
 		System.out.println("当天开始结束时间："+getDayBeginTime()+"\t"+getDayEndTime());
-		System.out.println(dateStringFormatNoSub8("2014-01-01 00:00:00")+"--");
+		System.out.println("字符串时间表示 ： "+dateStringFormatNoSub8("2015-12-21 14:00:00")+"--");
 		//1413415931--1366940967
 		System.out.println(getDayBeginTime(0)+"---"+getDayEndTime(1));
 		System.out.println(getFormatTimeFormat("2014-08-05 14:00:00", "yyyy-MM-dd HH:mm:ss", "MM-dd HH:mm:ss"));
-//		System.out.println(getNowTimestamp10LongMonth(0));
-//		System.out.println( (1399910400- 1399737600) / (60* 60));
-//		System.out.println(cal.get(Calendar.DATE));
-//		System.out.println(cal.getFirstDayOfWeek());
-//		System.out.println(cal.get(Calendar.DAY_OF_MONTH));
-//		System.out.println(cal.get(Calendar.YEAR));
-//		System.out.println(cal.get(Calendar.MONTH) + 1);
-//		System.out.println(getTimeWithDay(30));
-//		System.out.println(1342943940 / (24 * 3600 * 365));
 		System.out.println("-------------------------");
-		System.out.println(subDayFromCurrDate(7) + "-" + subDayFromCurrDate(15));
-		System.out.println(subDayFromCurrDate(30) + "-" + subDayFromCurrDate(90));
+		System.out.println(formatDate(1449035961));
+		System.out.println("get day start = "+getDayBeginTime());
+		System.out.println("get day end = "+getDayEndTime());
+		System.out.println("get param day end time = "+getParamDayEndTime(1449036114));
+		//1449036114-1449075600
+		System.out.println("get real out time = "+getRealOutTime(1449036114));
 //		moneySaveTime();
 	}
 }

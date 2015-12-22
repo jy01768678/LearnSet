@@ -34,9 +34,9 @@ public class RegistryTest {
 //		TestRegistryV2_delBlob();
 //		TestRegistryV2_getBlob();
 //		TestRegistryV2_delManifest();
-//		TestRegistryV2_getManifest();
-//		TestRegistryV2_getTag();
-		TestRegistryV2();
+//		TestRegistryV2_getManifest();//获取docker-content-digest
+//		TestRegistryV2_getTag(); // ok
+		TestRegistryV2(); //ok
 //		TestRegistryV2_Del();
 //		TestRegistryV1();
 	}
@@ -58,7 +58,7 @@ public class RegistryTest {
 	public static void TestRegistryV2_getBlob(){
 		String username = "wowotuanops";
 		String password = "registrywowotuan";
-		String url = "https://10.9.120.24/v2/centos/blobs/sha256:24d999e10f79d74454476081f4812971ad03a49db8b209a40ba8ef288c1ab583";
+		String url = "https://10.9.120.24/v2/centos/blobs/sha256:fa4007ccc57768b8721ce4a18d889fd70c1b5feaf72a11981dc714594ab9fde3";
 		HttpClientTools tools = HttpClientManager.getHttpClientTools();
 		boolean rs = false;
 		Map<String, String> headers = new HashMap<String, String>();
@@ -76,7 +76,7 @@ public class RegistryTest {
 	public static void TestRegistryV2_delManifest(){
 		String username = "wowotuanops";
 		String password = "registrywowotuan";
-		String url = "https://10.9.120.24/v2/centos/manifests/sha256:24d999e10f79d74454476081f4812971ad03a49db8b209a40ba8ef288c1ab583";
+		String url = "https://10.9.120.24/v2/centos/manifests/sha256:fa4007ccc57768b8721ce4a18d889fd70c1b5feaf72a11981dc714594ab9fde3";
 		HttpClientTools tools = HttpClientManager.getHttpClientTools();
 		boolean rs = false;
 		Map<String, String> headers = new HashMap<String, String>();
@@ -87,11 +87,11 @@ public class RegistryTest {
 		System.out.println(tools.getStrGetResponseBody() + "--code="+tools.getiGetResultCode());
 	}
 	
-	//7f295489e9630370ff4b0d92930f7411417d82ef80059f7db7bd6247d1c01eee
+	//centos-test : sha256:fa4007ccc57768b8721ce4a18d889fd70c1b5feaf72a11981dc714594ab9fde3
 	public static void TestRegistryV2_getManifest(){
 		String username = "wowotuanops";
 		String password = "registrywowotuan";
-		String url = "https://10.9.120.24/v2/centos/manifests/base";
+		String url = "https://10.9.120.24/v2/centos/manifests/test";
 		HttpClientTools tools = HttpClientManager.getHttpClientTools();
 		boolean rs = false;
 		Map<String, String> headers = new HashMap<String, String>();
@@ -108,7 +108,12 @@ public class RegistryTest {
 	
 	/**
 	 * {"name":"centos","tags":["base","test"]}
-	 * 
+	 * {"name":"registry","tags":["2"]}
+	 * {"name":"phpnginx","tags":["test"]}
+	 * {"name":"officalcentos","tags":["6"]}
+	 * {"name":"centostest","tags":["6"]}
+	 * {"name":"centosjdk1.6","tags":["v1"]}
+	 * {"name":"centos2","tags":["6"]}
 	 */
 	public static void TestRegistryV2_getTag(){
 		String username = "wowotuanops";
@@ -129,7 +134,7 @@ public class RegistryTest {
 		}
 	}
 	
-	//["centos","centos2","centostest","officalcentos","phpnginx","registry"]
+	//["centos","centos2","centosjdk1.6","centostest","officalcentos","phpnginx","registry"]
 	public static void TestRegistryV2(){
 		String username = "wowotuanops";
 		String password = "registrywowotuan";

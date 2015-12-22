@@ -59,7 +59,7 @@ public class ConfSimpleClient {
 		ZooKeeper zCli = null;
 		
 		try {
-			zCli = new ZooKeeper("10.9.28.92:2181", 2000, new WhatherDemo(this));
+			zCli = new ZooKeeper("10.8.210.191", 2000, new WhatherDemo(this));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,7 +108,7 @@ public class ConfSimpleClient {
 	 * routers
 	 */
 	public List<String> getChildrens() throws KeeperException, InterruptedException{
-		return zClient.getChildren("/dubbo/com.tuan.notify.service.NotifyService/configurators", true);
+		return zClient.getChildren("/dubbo/com.yz.skylarksearch.service.SearchQueryService/consumers", true);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class ConfSimpleClient {
 	 * @throws KeeperException 
 	 */
 	public boolean isZNodeExist() throws KeeperException, InterruptedException {
-		Stat stat = zClient.exists("/dubbo/com.tuan.notify.service.NotifyService", false);
+		Stat stat = zClient.exists("/dubbo", false);
 		
 		if(null == stat) {
 			return false;
@@ -142,7 +142,7 @@ public class ConfSimpleClient {
 	 */
 	public void deleteZNode() throws InterruptedException, KeeperException {
 		// "-1"代表删除Znode所有版本
-		zClient.delete("/dubbo", -1); 
+		zClient.delete("/dubbo/com.yz.skylarksearch.service.SearchQueryService/consumers/consumer%3A%2F%2F10.9.28.53%2Fcom.yz.skylarksearch.service.SearchQueryService%3Fapplication%3Dskylarkserver%26category%3Dconsumers%26check%3Dfalse%26dubbo%3D2.5.4.20150518%26interface%3Dcom.yz.skylarksearch.service.SearchQueryService%26methods%3DsearchCustomer%2CsearchShop%2CsearchWiki%26owner%3Dzhengzhaolong%2Cdongtao%26pid%3D11263%26revision%3D1.0.0.20151116%26side%3Dconsumer%26timeout%3D3000%26timestamp%3D1448262407558%26version%3D1.0", -1);
 	}
 	
 	
@@ -158,11 +158,12 @@ public class ConfSimpleClient {
 //		System.out.println(isExsit);
 		
 //		String value = client.getZNode();
+//		host.deleteZNode();
 		List<String> value = host.getChildrens();
 		for(String service : value){
 			System.out.println("获取数据为：" + service);
 		}
-		
+
 //		String value1 = client.getZNode();
 //		System.out.println("获取数据为：" + value1);
 //		client.shutConnect();
