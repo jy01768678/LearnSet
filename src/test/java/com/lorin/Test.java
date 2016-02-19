@@ -29,8 +29,8 @@ public class Test {
 		System.out.println(tst.toString());
 		System.out.println(1+'a');
 		System.out.println(1+"a");
-		String result = "https://registry.wowotuan.me:443/aether/spe:62,";
-		System.out.println(result.substring(result.lastIndexOf("https://")+8));
+		String result = "bacis[0]";
+		System.out.println(result.substring(0,result.indexOf("[")));
 		String test = new String();
 //		getRealIp("https://10.9.120.22:2376");
 //		long mem = 134926032896l;
@@ -46,8 +46,9 @@ public class Test {
 //		array.add(cpu1);
 //		System.out.println(array.toString());
 //		getUrl("/backend/cluster/service/1/docker.do");
-		testIntern();
-
+//		testIntern();
+		String evn = "${mysqlPasswordGener.findPassword(\"611111111117\")}";
+		System.out.println(evn.substring(evn.indexOf("(\"")+2,evn.indexOf("\")")));
 	}
 	
 	public static void testIntern(){

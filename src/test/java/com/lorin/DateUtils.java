@@ -315,7 +315,7 @@ public class DateUtils {
 
 	public static long getRealOutTime(int claimTime){
 		long a = ( getParamDayEndTime(claimTime) + 13 * 24 * 3600 );
-		int b = 1449075600;//getNowTimestampSecond();
+		int b = getNowTimestampSecond();
 		long c = a - b;
 		long d = c / (24*3600);
 		return  d;
@@ -339,7 +339,7 @@ public class DateUtils {
 //		System.out.println(geTimestamp10Long(beginTime));//
 		System.out.println("当前时间没有减去8："+getNowTimestamp10LongNoSub8());
 		//2013-11-11 16:43:51 
-		System.out.println("没有+8:"+dateChnFormat(1449656578, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1451383448, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有+8:"+dateChnFormat(1449072000, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有-8:"+GMTSFormatToCT(1381001805, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("-8 int:"+getNowTimestamp10Int());
@@ -356,7 +356,7 @@ public class DateUtils {
 		System.out.println("get day end = "+getDayEndTime());
 		System.out.println("get param day end time = "+getParamDayEndTime(1449036114));
 		//1449036114-1449075600
-		System.out.println("get real out time = "+getRealOutTime(1449036114));
+		System.out.println("get real out time = "+getRealOutTime(1451383448));
 //		moneySaveTime();
 	}
 }
