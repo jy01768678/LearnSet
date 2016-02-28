@@ -2,7 +2,7 @@ package com.lorin.algorithm;
 
 public class Permutation {
 
-	public void permuat(char[] chars,boolean[] userd,int pos,char[] out){
+	public static void permuat(char[] chars,boolean[] userd,int pos,char[] out){
 		if(pos == chars.length){
 			System.out.println(out);              
             return;  
@@ -45,6 +45,7 @@ public class Permutation {
     	 char[] chars = new char[]{'c','a','d','b','e'};  
          boolean[] used = new boolean[]{false,false,false,false,false};  
          char[] out = new char[5];  
-         combine(4,chars,used,0,out);  
+//         combine(4,chars,used,0,out);
+         permuat(chars,used,0,out);
 	}
 }

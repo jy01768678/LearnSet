@@ -29,7 +29,7 @@ public class TestCountDownLatch {
              }
             };
             service.submit(run);
-           }
+        }
            System.out.println("Game Start");
            start.countDown();
            end.await();

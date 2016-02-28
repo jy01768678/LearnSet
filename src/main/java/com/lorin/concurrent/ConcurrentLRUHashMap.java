@@ -245,7 +245,8 @@ public class ConcurrentLRUHashMap<K, V> extends AbstractMap<K, V> implements Con
         }
         /**
          * 将第一个参数代表的节点插入到第二个参数代表的节点之前
-         * 
+         * header 永远指向的是最老的数据 最新的数据 放到 HashEntity[] 里面(也就是最新添加的数据在最末尾)
+         * 而整个链表的顺序就是末尾在前 header 在后的双向循环链表
          * @param newEntry
          *            需要插入的节点
          * @param entry
