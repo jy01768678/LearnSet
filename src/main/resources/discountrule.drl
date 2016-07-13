@@ -1,7 +1,7 @@
 package com.baidu.test //created on: 2009-11-11
 
 
-import com.baidu.test.Order; //list any import classes here.
+import com.lorin.drools.Order; //list any import classes here.
 
 
 //declare any global variables here

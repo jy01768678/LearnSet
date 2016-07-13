@@ -5,7 +5,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 /**
- * Created by baidu on 16/7/13.
+ * Created by lorin on 16/7/13.
  */
 public class ClockTest {
     public static void main(String[] args) {

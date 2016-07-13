@@ -1,12 +1,8 @@
 package com.lorin.drools;
 
-//import org.kie.api.io.ResourceType;
 import com.lorin.drools.fact.BigDecimalFact;
 import com.lorin.drools.fact.OriginalMapFact;
 import com.lorin.drools.fact.StringFact;
-import org.drools.core.base.RuleNameEndsWithAgendaFilter;
-import org.drools.core.base.RuleNameStartsWithAgendaFilter;
-import org.drools.core.impl.InternalKnowledgeBase;
 import org.drools.core.io.impl.ReaderResource;
 import org.kie.api.io.ResourceType;
 import org.kie.internal.KnowledgeBase;
@@ -22,15 +18,15 @@ import java.math.BigDecimal;
 import java.util.*;
 
 /**
- * Created by baidu on 16/7/13.
+ * Created by lorin on 16/7/13.
  */
 public class RuleTest {
 
     public static final void main(String[] args) throws Exception {
         RuleTest launcher = new RuleTest();
         launcher.executeExample();
-        launcher.fireAllRules();
-        launcher.fireActualRules();
+//        launcher.fireAllRules();
+//        launcher.fireActualRules();
     }
 
     public int executeExample() throws Exception {

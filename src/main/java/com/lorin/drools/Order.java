@@ -1,7 +1,7 @@
 package com.lorin.drools;
 
 /**
- * Created by baidu on 16/7/13.
+ * Created by lorin on 16/7/13.
  */
 public class Order {
     private String name = "";
