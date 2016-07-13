@@ -3,7 +3,7 @@ package com.lorin.drools.fact;
 import java.io.Serializable;
 
 /**
- * Created by baidu on 16/7/7.
+ * Created by lorin on 16/7/7.
  */
 public class SuperFact implements Serializable {
     private static final long serialVersionUID = -4463289001164493237L;

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 
 /**
- * Created by baidu on 16/7/7.
+ * Created by lorin on 16/7/7.
  */
 public class BigDecimalFact extends com.lorin.drools.fact.SuperFact implements Serializable {
     private static final long serialVersionUID = 1501204781800592325L;

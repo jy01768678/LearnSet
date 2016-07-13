@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Created by baidu on 16/7/7.
+ * Created by lorin on 16/7/7.
  */
 @SuppressWarnings("serial")
 public class MapFact extends SuperFact implements Serializable {
