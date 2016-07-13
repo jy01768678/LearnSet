@@ -1,4 +1,4 @@
-package com.baidu.test;
+package com.lorin.drools;
 
 /**
  * Created by baidu on 16/7/13.

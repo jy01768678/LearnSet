@@ -1,9 +1,9 @@
-package com.baidu.test;
+package com.lorin.drools;
 
 //import org.kie.api.io.ResourceType;
-import com.baidu.test.fact.BigDecimalFact;
-import com.baidu.test.fact.OriginalMapFact;
-import com.baidu.test.fact.StringFact;
+import com.lorin.drools.fact.BigDecimalFact;
+import com.lorin.drools.fact.OriginalMapFact;
+import com.lorin.drools.fact.StringFact;
 import org.drools.core.base.RuleNameEndsWithAgendaFilter;
 import org.drools.core.base.RuleNameStartsWithAgendaFilter;
 import org.drools.core.impl.InternalKnowledgeBase;
