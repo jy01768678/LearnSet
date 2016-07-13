@@ -1,0 +1,26 @@
+package com.baidu.rim.risk.realtime.drl;
+import java.util.Map;
+import java.lang.*;
+import java.math.BigDecimal;
+import java.util.Map;
+import com.lorin.drools.fact.BigDecimalFact;
+import com.lorin.drools.fact.MapFact;
+import com.lorin.drools.fact.StringFact;
+import com.lorin.drools.fact.OriginalMapFact;
+import function com.lorin.drools.common.BigDecimalUtil.judgeBigDecimalNull;
+import function com.lorin.drools.common.BigDecimalUtil.string2Double;
+global Map map;
+rule "1908_TEST00001"
+	when
+	    BigDecimalFact(name == "BA00A100A1_BlankList_NewMemberId_Fact" , $BA00A100A1_BlankList_NewMemberId_Fact:value)
+	    eval((judgeBigDecimalNull($BA00A100A1_BlankList_NewMemberId_Fact) == 1 ))
+		//金额
+		OriginalMapFact(name == "originalMap",$SingleTradeAmount : value.get("tradeAmount"))
+		eval(string2Double((String)$SingleTradeAmount) > 200)
+
+		//实名地址，省份
+		StringFact(name == "IPProvinceName_Fact", $TAF01400W1_IP_Address:value)
+		eval("河南".equals((String)$TAF01400W1_IP_Address))
+	then
+	    map.put("TEST00001","{\"manualAudit\":false,\"priority\":0,\"resultHandType\":0,\"riskResults\":[{\"code\":\"D0000001\",\"control\":\"control\",\"description\":\"RS0000002\"}],\"sequence\":4}");
+end

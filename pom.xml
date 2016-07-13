@@ -21,7 +21,7 @@
 
   <dependencies>
   		 <dependency>
-			<groupId>json-lib</groupId>
+			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<version>2.3</version>
 		</dependency>
@@ -278,6 +278,22 @@
 			<artifactId>guava</artifactId>
 			<version>19.0-rc2</version>
 		</dependency>
+	    <!--drools -->
+	  <dependency>
+		  <groupId>org.drools</groupId>
+		  <artifactId>drools-core</artifactId>
+		  <version>6.4.0.Final</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.drools</groupId>
+		  <artifactId>drools-compiler</artifactId>
+		  <version>6.4.0.Final</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-lang3</artifactId>
+		  <version>3.1</version>
+	  </dependency>
   </dependencies>
   <build>
   <plugins>
