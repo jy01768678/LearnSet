@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.lang.StringUtils;
@@ -44,13 +42,13 @@ public class RegistryTest {
 	}
 
 	public static void TestJson(){
-		String json = "{\"busybox\": [{\"tag\": \"v2\", \"create_time\": \"2016-01-27 10:44:08\"}], \"centos\": [{\"tag\": \"6v3\", \"create_time\": \"2016-01-26 14:47:03\"}, {\"tag\": \"6\", \"create_time\": \"2016-01-26 14:29:49\"}, {\"tag\": \"6v2\", \"create_time\": \"2016-01-26 14:36:24\"}], \"nginx\": [{\"tag\": \"1\", \"create_time\": \"2016-01-27 10:39:56\"}], \"bind\": [{\"tag\": \"v1\", \"create_time\": \"2016-01-29 14:33:39\"}, {\"tag\": \"v3\", \"create_time\": \"2016-01-29 14:42:58\"}, {\"tag\": \"v4\", \"create_time\": \"2016-01-29 14:47:16\"}, {\"tag\": \"v2\", \"create_time\": \"2016-01-29 14:34:53\"}], \"nginxtest\": [{\"tag\": \"v1\", \"create_time\": \"2016-01-27 10:43:06\"}], \"tengine\": [{\"tag\": \"v1\", \"create_time\": \"2016-01-27 10:41:57\"}], \"registry\": [{\"tag\": \"2.2.1\", \"create_time\": \"2016-01-27 11:45:20\"}]}";
-		JSONObject jsonObject = JSONObject.fromObject(json);
-		Set<String> images = jsonObject.keySet();
-		for (String image : images){
-			JSONArray array = jsonObject.getJSONArray(image);
-			System.out.println("image:"+image+"--"+array.toString());
-		}
+//		String json = "{\"busybox\": [{\"tag\": \"v2\", \"create_time\": \"2016-01-27 10:44:08\"}], \"centos\": [{\"tag\": \"6v3\", \"create_time\": \"2016-01-26 14:47:03\"}, {\"tag\": \"6\", \"create_time\": \"2016-01-26 14:29:49\"}, {\"tag\": \"6v2\", \"create_time\": \"2016-01-26 14:36:24\"}], \"nginx\": [{\"tag\": \"1\", \"create_time\": \"2016-01-27 10:39:56\"}], \"bind\": [{\"tag\": \"v1\", \"create_time\": \"2016-01-29 14:33:39\"}, {\"tag\": \"v3\", \"create_time\": \"2016-01-29 14:42:58\"}, {\"tag\": \"v4\", \"create_time\": \"2016-01-29 14:47:16\"}, {\"tag\": \"v2\", \"create_time\": \"2016-01-29 14:34:53\"}], \"nginxtest\": [{\"tag\": \"v1\", \"create_time\": \"2016-01-27 10:43:06\"}], \"tengine\": [{\"tag\": \"v1\", \"create_time\": \"2016-01-27 10:41:57\"}], \"registry\": [{\"tag\": \"2.2.1\", \"create_time\": \"2016-01-27 11:45:20\"}]}";
+//		JSONObject jsonObject = JSONObject.fromObject(json);
+//		Set<String> images = jsonObject.keySet();
+//		for (String image : images){
+//			JSONArray array = jsonObject.getJSONArray(image);
+//			System.out.println("image:"+image+"--"+array.toString());
+//		}
 	}
 
 	/**
@@ -175,8 +173,8 @@ public class RegistryTest {
 		if(rs){
 			String message = tools.getStrGetResponseBody();
 			System.out.println(message + "\n\r"+tools.getiGetResultCode());
-			RegistrySearchRepoData rsrd = JSONUtil.jsonToBean(message, RegistrySearchRepoData.class);
-			System.out.println(rsrd.getRepositories().size());
+//			RegistrySearchRepoData rsrd = JSONUtil.jsonToBean(message, RegistrySearchRepoData.class);
+//			System.out.println(rsrd.getRepositories().size());
 		}	
 	}
 	

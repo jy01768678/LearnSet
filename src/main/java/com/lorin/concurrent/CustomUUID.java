@@ -123,4 +123,8 @@ public class CustomUUID {
     protected long timeGen() {
         return System.currentTimeMillis();
     }
+
+    public static void main(String[] args) {
+
+    }
 }

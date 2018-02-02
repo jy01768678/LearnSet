@@ -25,8 +25,8 @@ public class RuleTest {
     public static final void main(String[] args) throws Exception {
         RuleTest launcher = new RuleTest();
         launcher.executeExample();
-//        launcher.fireAllRules();
-//        launcher.fireActualRules();
+        launcher.fireAllRules();
+        launcher.fireActualRules();
     }
 
     public int executeExample() throws Exception {

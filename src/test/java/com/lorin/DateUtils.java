@@ -5,11 +5,16 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.mysql.jdbc.TimeUtil;
 import org.apache.commons.lang.StringUtils;
@@ -91,7 +96,6 @@ public class DateUtils {
 	/**
 	 * 
 	 * @param date
-	 * @param format
 	 * @return 当天凌晨时间 不减8小时
 	 * 2012-7-20 下午06:04:45 wh
 	 */
@@ -321,6 +325,43 @@ public class DateUtils {
 		return  d;
 	}
 
+	public static String DateString2formatString(String s)
+	{
+		String str="";
+		try
+		{
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.CHINESE);
+			Date date=sd.parse(s);
+			str=sdf.format(date);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return str;
+		}
+		return str;
+	}
+
+	public static boolean isUrl(String pInput) {
+		if (pInput == null) {
+			return false;
+		}
+		String regEx = "^(http|https)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-"
+				+ "Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{"
+				+ "2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}"
+				+ "[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|"
+				+ "[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-"
+				+ "4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0"
+				+ "-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/"
+				+ "[^/][a-zA-Z0-9\\.\\,\\?\\'\\\\/\\+&%\\$\\=~_\\-@]*)*$";
+		Pattern p = Pattern.compile(regEx);
+		pInput = pInput.replaceAll("@www","+");
+		System.out.print(pInput);
+		Matcher matcher = p.matcher(pInput);
+		return matcher.matches();
+	}
+
 
 	public static void main(String[] args) throws ParseException {
 		Date now = new Date();
@@ -339,14 +380,14 @@ public class DateUtils {
 //		System.out.println(geTimestamp10Long(beginTime));//
 		System.out.println("当前时间没有减去8："+getNowTimestamp10LongNoSub8());
 		//2013-11-11 16:43:51 
-		System.out.println("没有+8:"+dateChnFormat(1451383448, "yyyy-MM-dd HH:mm:ss"));
-		System.out.println("没有+8:"+dateChnFormat(1449072000, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1513297808, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1486310400, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有-8:"+GMTSFormatToCT(1381001805, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("-8 int:"+getNowTimestamp10Int());
 		System.out.println("ddd:"+getCurrDateStart(new Date()) / 1000);
 		System.out.println(formatDate(0) + "\t" + formatDate(1388289755));
 		System.out.println("当天开始结束时间："+getDayBeginTime()+"\t"+getDayEndTime());
-		System.out.println("字符串时间表示 ： "+dateStringFormatNoSub8("2015-12-21 14:00:00")+"--");
+		System.out.println("字符串时间表示 ： "+dateStringFormatNoSub8("2017-01-13 18:00:47")+"--");
 		//1413415931--1366940967
 		System.out.println(getDayBeginTime(0)+"---"+getDayEndTime(1));
 		System.out.println(getFormatTimeFormat("2014-08-05 14:00:00", "yyyy-MM-dd HH:mm:ss", "MM-dd HH:mm:ss"));
@@ -356,7 +397,19 @@ public class DateUtils {
 		System.out.println("get day end = "+getDayEndTime());
 		System.out.println("get param day end time = "+getParamDayEndTime(1449036114));
 		//1449036114-1449075600
-		System.out.println("get real out time = "+getRealOutTime(1451383448));
+		System.out.println(DateString2formatString("2010-03-03T00:00:00+08:00"));
 //		moneySaveTime();
+		System.out.println("------------");
+		//格式化时间
+		String sp = "2010-03-03T00:00:00+0800";
+		SimpleDateFormat sdff = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sszzz");
+		String time = sdff.format(new Date());
+		Date spd = sdff.parse(sp);
+		System.out.println(time);
+		System.out.println(spd);
+		//解析时间 2016-01-05T15:06:58+0800
+		float dayAvgLoanAmount = 9512011;
+		System.out.println(BigDecimal.valueOf(dayAvgLoanAmount).divide(
+				new BigDecimal(170), 2, BigDecimal.ROUND_UP));
 	}
 }

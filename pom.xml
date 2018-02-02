@@ -20,6 +20,11 @@
   </properties>
 
   <dependencies>
+	  <dependency>
+		  <groupId>io.netty</groupId>
+		  <artifactId>netty-all</artifactId>
+		  <version>4.0.36.Final</version>
+	  </dependency>
   		 <dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>

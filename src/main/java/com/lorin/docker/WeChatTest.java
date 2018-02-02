@@ -6,7 +6,6 @@ import java.util.Arrays;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 
-import net.sf.json.JSONObject;
 
 import com.lorin.httpClient.HttpClientManager;
 import com.lorin.httpClient.HttpClientTools;
@@ -20,11 +19,11 @@ public class WeChatTest {
 		HttpClientTools tools = HttpClientManager.getHttpClientTools();
 		boolean result = tools.executeGetMethodHttps(url, null, null);
 		WeChatAccessToken wat = null;
-		if(result){
-			String content = tools.getStrGetResponseBody();
-			wat = (WeChatAccessToken) JSONObject.toBean(JSONObject.fromObject(content), WeChatAccessToken.class);
-			System.out.println(wat.getAccess_token()+"\n\r"+wat.getExpires_in());
-		}
+//		if(result){
+//			String content = tools.getStrGetResponseBody();
+//			wat = (WeChatAccessToken) JSONObject.toBean(JSONObject.fromObject(content), WeChatAccessToken.class);
+//			System.out.println(wat.getAccess_token()+"\n\r"+wat.getExpires_in());
+//		}
 		
 	}
 	

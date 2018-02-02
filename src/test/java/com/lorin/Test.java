@@ -1,5 +1,8 @@
 package com.lorin;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,12 +11,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import com.appadhoc.javasdk.AdhocSdk;
 import com.appadhoc.javasdk.ExperimentFlags;
 import com.appadhoc.javasdk.T;
+import com.lorin.job.MessageJob;
 
 public class Test {
 
@@ -29,10 +31,25 @@ public class Test {
 		System.out.println(tst.toString());
 		System.out.println(1+'a');
 		System.out.println(1+"a");
-		String result = "bacis[0]";
-		System.out.println(result.substring(0,result.indexOf("[")));
-		String test = new String();
-//		getRealIp("https://10.9.120.22:2376");
+		String result = "BFYTD8";
+		System.out.println(result.substring(0,5));
+		String test = "";
+		try {
+			int count = 185723;
+			Double page = Math.ceil((double) count / 1000);
+
+			for (int i = 0; i < page; i++) {
+				System.out.println(i);
+			}
+			System.out.println(new String(test.getBytes("utf8"),"utf8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		DecimalFormat df = new DecimalFormat("0.000000");
+		double m1 = 234880;
+		double m2 = 600000;
+		System.out.println(Double.valueOf(df.format((float)m1/m2)));
+		//		getRealIp("https://10.9.120.22:2376");
 //		long mem = 134926032896l;
 //		
 //		JSONObject cpu = new JSONObject();
@@ -47,8 +64,22 @@ public class Test {
 //		System.out.println(array.toString());
 //		getUrl("/backend/cluster/service/1/docker.do");
 //		testIntern();
-		String evn = "${mysqlPasswordGener.findPassword(\"611111111117\")}";
-		System.out.println(evn.substring(evn.indexOf("(\"")+2,evn.indexOf("\")")));
+		BigDecimal dayLoanAmount = new BigDecimal("10");
+		BigDecimal dayLoanAmount1 = new BigDecimal("20");
+		dayLoanAmount = dayLoanAmount.add(dayLoanAmount1);
+		System.out.println(dayLoanAmount.toPlainString());
+	}
+
+	public static String unicode2String(String unicode) {
+		StringBuffer string = new StringBuffer();
+		String[] hex = unicode.split("\\\\u");
+		for (int i = 1; i < hex.length; i++) {
+			// 转换出每一个代码点
+			int data = Integer.parseInt(hex[i], 16);
+			// 追加成string
+			string.append((char) data);
+		}
+		return string.toString();
 	}
 	
 	public static void testIntern(){

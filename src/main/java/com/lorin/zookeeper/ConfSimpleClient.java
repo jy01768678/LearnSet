@@ -59,7 +59,7 @@ public class ConfSimpleClient {
 		ZooKeeper zCli = null;
 		
 		try {
-			zCli = new ZooKeeper("10.8.210.191", 2000, new WhatherDemo(this));
+			zCli = new ZooKeeper("10.48.16.61:8382", 2000, new WhatherDemo(this));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,7 +108,7 @@ public class ConfSimpleClient {
 	 * routers
 	 */
 	public List<String> getChildrens() throws KeeperException, InterruptedException{
-		return zClient.getChildren("/dubbo/com.yz.skylarksearch.service.SearchQueryService/consumers", true);
+		return zClient.getChildren("/dubbo", true);
 	}
 	
 	/**
