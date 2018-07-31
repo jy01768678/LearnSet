@@ -141,15 +141,7 @@ public class Tree {
             preOrder(tree.right);
         }
     }
-    public static void preOrder1(Tree tree){
-        if(tree != null){
-            System.out.println(tree.data + " ");
-            preOrder1(tree.left);
-            preOrder1(tree.right);
-        }
-    }
-    
-    
+
     public static void stackPreOrder(Tree tree){
         Stack stack = new Stack();
         if(tree == null)return;
@@ -175,32 +167,7 @@ public class Tree {
         }
     }
     
-    public static void stackPreOrder1(Tree tree){
-        Stack stack = new Stack();
-        if(tree == null)return;
-        stack.push(tree);
-        System.out.println(tree.data);
-        Tree node = tree.left;
-        while(node != null){
-            stack.push(node);
-            System.out.println(node.data + "\t");
-            node = node.left;
-        }
-        node = (Tree) stack.pop();
-        while(node != null){
-            node = node.right;
-            while(node != null){
-                stack.push(node);
-                System.out.println(node.data);
-                node = node.left;
-            }
-            if (stack.empty())
-                break;
-            node = (Tree) stack.pop();
-        }
-        
-        
-    }
+
     
     /**
      * 中序遍历
@@ -214,13 +181,48 @@ public class Tree {
             midOrder(tree.right);
         }
     }
-    public static void minOrder1(Tree tree){
-        if(tree != null){
-            midOrder(tree.left);
-            System.out.println(tree.data + " ");
-            midOrder(tree.right);
+    // 分治算法
+    public List<Integer> inorder(Tree tree){
+        List<Integer> result = new ArrayList<>();
+        if (tree == null) {
+             return result;
         }
+        List<Integer> left = inorder(tree.left);
+        List<Integer> right = inorder(tree.right);
+
+        result.addAll(left);
+        result.add(tree.data);
+        result.addAll(right);
+        return result;
     }
+    // Morris traversal  https://www.cnblogs.com/reboot329/p/6107818.html
+    public List<Integer> inorderByMorris(Tree tree) {
+        List<Integer> result = new ArrayList<>();
+        Tree temp = tree;
+        while(temp != null) {
+            Tree morrisTemp = temp;
+            if (temp.left != null) {
+                morrisTemp = temp.left;
+                while(morrisTemp.right != null && morrisTemp.right!= temp) {
+                    morrisTemp = morrisTemp.right;
+                }
+                if (morrisTemp.right == null) {
+                    morrisTemp.right = temp;
+                    // result.add(temp.data); pre-order
+                    temp = temp.left;
+                } else {
+                    morrisTemp.right = null;
+                    result.add(temp.data); // in-order
+                    temp = temp.right;
+                }
+            } else {
+                result.add(temp.data);
+                temp = temp.right;
+            }
+        }
+        return result;
+    }
+
     
     public static void stackInOrder(Tree root) {
         Stack stack = new Stack();

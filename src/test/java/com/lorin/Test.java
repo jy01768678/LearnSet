@@ -67,7 +67,7 @@ public class Test {
 		BigDecimal dayLoanAmount = new BigDecimal("10");
 		BigDecimal dayLoanAmount1 = new BigDecimal("20");
 		dayLoanAmount = dayLoanAmount.add(dayLoanAmount1);
-		System.out.println(dayLoanAmount.toPlainString());
+		System.out.println(3/10);
 	}
 
 	public static String unicode2String(String unicode) {

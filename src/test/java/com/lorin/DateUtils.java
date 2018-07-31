@@ -362,6 +362,30 @@ public class DateUtils {
 		return matcher.matches();
 	}
 
+	public static boolean isRightRange(String input) {
+		String regex = ".*((不得从事|不含|不得开展|除).*(培训|教学|教育)).*";
+		Pattern p = Pattern.compile(regex);
+		Matcher matcher = p.matcher(input);
+		return matcher.matches();
+	}
+
+	public static boolean isInRange(String ip, String cidr) {
+		String[] ips = ip.split("\\.");
+		int ipAddr = (Integer.parseInt(ips[0]) << 24)
+				| (Integer.parseInt(ips[1]) << 16)
+				| (Integer.parseInt(ips[2]) << 8) | Integer.parseInt(ips[3]);
+		int type = Integer.parseInt(cidr.replaceAll(".*/", ""));
+		int mask = 0xFFFFFFFF << (32 - type);
+		String cidrIp = cidr.replaceAll("/.*", "");
+		String[] cidrIps = cidrIp.split("\\.");
+		int cidrIpAddr = (Integer.parseInt(cidrIps[0]) << 24)
+				| (Integer.parseInt(cidrIps[1]) << 16)
+				| (Integer.parseInt(cidrIps[2]) << 8)
+				| Integer.parseInt(cidrIps[3]);
+
+		return (ipAddr & mask) == (cidrIpAddr & mask);
+	}
+
 
 	public static void main(String[] args) throws ParseException {
 		Date now = new Date();
@@ -380,14 +404,14 @@ public class DateUtils {
 //		System.out.println(geTimestamp10Long(beginTime));//
 		System.out.println("当前时间没有减去8："+getNowTimestamp10LongNoSub8());
 		//2013-11-11 16:43:51 
-		System.out.println("没有+8:"+dateChnFormat(1513297808, "yyyy-MM-dd HH:mm:ss"));
+		System.out.println("没有+8:"+dateChnFormat(1481212800, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有+8:"+dateChnFormat(1486310400, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("没有-8:"+GMTSFormatToCT(1381001805, "yyyy-MM-dd HH:mm:ss"));
 		System.out.println("-8 int:"+getNowTimestamp10Int());
 		System.out.println("ddd:"+getCurrDateStart(new Date()) / 1000);
 		System.out.println(formatDate(0) + "\t" + formatDate(1388289755));
 		System.out.println("当天开始结束时间："+getDayBeginTime()+"\t"+getDayEndTime());
-		System.out.println("字符串时间表示 ： "+dateStringFormatNoSub8("2017-01-13 18:00:47")+"--");
+		System.out.println("字符串时间表示 ： "+dateStringFormatNoSub8("2018-03-01 1:00:00")+"--");
 		//1413415931--1366940967
 		System.out.println(getDayBeginTime(0)+"---"+getDayEndTime(1));
 		System.out.println(getFormatTimeFormat("2014-08-05 14:00:00", "yyyy-MM-dd HH:mm:ss", "MM-dd HH:mm:ss"));
@@ -407,9 +431,7 @@ public class DateUtils {
 		Date spd = sdff.parse(sp);
 		System.out.println(time);
 		System.out.println(spd);
-		//解析时间 2016-01-05T15:06:58+0800
-		float dayAvgLoanAmount = 9512011;
-		System.out.println(BigDecimal.valueOf(dayAvgLoanAmount).divide(
-				new BigDecimal(170), 2, BigDecimal.ROUND_UP));
+		System.out.println(isInRange("192.168.1.127", "192.168.1.64/26"));
+
 	}
 }
